@@ -49,3 +49,26 @@ function events() {
 }
 
 events();
+document.addEventListener('DOMContentLoaded', () => {
+  const navItems = [
+    { href: '#home', text: 'Home' },
+    { href: '#about', text: 'About' },
+    { href: '#schedules', text: 'Schedules' },
+    { href: '#contact', text: 'Contact' },
+    { href: '#signup', text: 'Sign up', class: 'btn' },
+  ];
+
+  const navbar = document.getElementById('navbar');
+
+  navItems.forEach(item => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = item.href;
+    a.innerHTML = item.text;
+    if (item.class) {
+      a.classList.add(item.class);
+    }
+    li.appendChild(a);
+    navbar.appendChild(li);
+  });
+});
