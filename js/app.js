@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   const navbar = document.getElementById('navbar');
-  const logo = document.querySelector('.logo');
 
   // Create navigation links
   navItems.forEach(item => {
@@ -38,6 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
         block: 'start'
       });
     }
+
+    // Update active link
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+    });
+    event.target.classList.add('active');
   }
 
   navLinks.forEach(link => {
@@ -89,15 +94,13 @@ document.addEventListener('DOMContentLoaded', () => {
     toggle_btn.addEventListener('click', toggleAnimation);
     hamburger_menu.addEventListener('click', function () {
       this.classList.toggle('active');
-      const links = document.querySelector('.links');
-      links.classList.toggle('active'); // Toggle visibility of the links
+
       if (this.classList.contains('active')) {
         bigWrapper.classList.add('active');
       } else {
         bigWrapper.classList.remove('active');
       }
     });
-
 
     // Hide navbar on scroll down, show on scroll up
     let lastScrollTop = 0;
