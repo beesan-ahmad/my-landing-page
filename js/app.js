@@ -87,9 +87,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Event listeners
   function events() {
     toggle_btn.addEventListener('click', toggleAnimation);
-    hamburger_menu.addEventListener('click', function() {
+    hamburger_menu.addEventListener('click', function () {
       this.classList.toggle('active');
-
+      const links = document.querySelector('.links');
+      links.classList.toggle('active'); // Toggle visibility of the links
       if (this.classList.contains('active')) {
         bigWrapper.classList.add('active');
       } else {
@@ -97,9 +98,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
+
     // Hide navbar on scroll down, show on scroll up
     let lastScrollTop = 0;
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
       if (scrollTop > lastScrollTop) {
