@@ -80,8 +80,10 @@ header .container {
 }
 
 .logo {
-  position: relative; /* Ensure logo stays in flow */
-  z-index: 1010; /* Ensure logo is above navbar */
+  position: relative;
+  /* Ensure logo stays in flow */
+  z-index: 1010;
+  /* Ensure logo is above navbar */
 }
 
 .logo img {
@@ -290,6 +292,7 @@ header .container {
   0% {
     clip-path: circle(30% at -25% -25%);
   }
+
   100% {
     clip-path: circle(150% at 0 0);
   }
