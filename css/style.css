@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
+/* Variables for Light and Dark Themes */
 .light {
   --mainColor: #64bcf4;
   --hoverColor: #5bacdf;
@@ -20,6 +21,7 @@
   --lightTwo: #e7e3e3;
 }
 
+/* Global Reset and Basic Styling */
 *,
 *::before,
 *::after {
@@ -32,11 +34,6 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
-/* .stop-scrolling {
-  height: 100%;
-  overflow: hidden;
-} */
-
 img {
   width: 100%;
 }
@@ -45,6 +42,7 @@ a {
   text-decoration: none;
 }
 
+/* Main Wrapper */
 .big-wrapper {
   position: relative;
   padding: 1.7rem 0 2rem;
@@ -82,9 +80,8 @@ header .container {
 }
 
 .logo {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+  position: relative; /* Ensure logo stays in flow */
+  z-index: 1010; /* Ensure logo is above navbar */
 }
 
 .logo img {
@@ -215,6 +212,24 @@ header .container {
   width: 123%;
   transform: translate(15%, 25px);
 }
+
+/* Existing styles */
+
+/* Navbar hide on scroll */
+#navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--mainColor);
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
+
+#navbar.hide {
+  transform: translateY(-100%);
+}
+
 
 .toggle-btn {
   display: inline-block;
