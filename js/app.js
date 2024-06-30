@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   const navbar = document.getElementById('navbar');
+  const sections = document.querySelectorAll('section'); // Assume sections have id's matching navItem hrefs
 
   // Create navigation links
   navItems.forEach(item => {
@@ -37,17 +38,30 @@ document.addEventListener('DOMContentLoaded', () => {
         block: 'start'
       });
     }
-
-    // Update active link
-    navLinks.forEach(link => {
-      link.classList.remove('active');
-    });
-    event.target.classList.add('active');
   }
 
   navLinks.forEach(link => {
     link.addEventListener('click', scrollToSection);
   });
+
+  // Function to highlight the active section link
+  function highlightNavLink() {
+    let currentSectionId = '';
+
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
+        currentSectionId = section.id;
+      }
+    });
+
+    navLinks.forEach((link) => {
+      link.classList.remove('active');
+      if (link.getAttribute('href').substring(1) === currentSectionId) {
+        link.classList.add('active');
+      }
+    });
+  }
 
   // Toggle theme
   const toggleBtn = document.querySelector('.toggle-btn');
@@ -92,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Event listeners
   function events() {
     toggle_btn.addEventListener('click', toggleAnimation);
-    hamburger_menu.addEventListener('click', function () {
+    hamburger_menu.addEventListener('click', function() {
       this.classList.toggle('active');
 
       if (this.classList.contains('active')) {
@@ -104,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Hide navbar on scroll down, show on scroll up
     let lastScrollTop = 0;
-    window.addEventListener('scroll', function () {
+    window.addEventListener('scroll', function() {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
       if (scrollTop > lastScrollTop) {
@@ -115,7 +129,13 @@ document.addEventListener('DOMContentLoaded', () => {
         navbar.classList.remove('hide');
       }
       lastScrollTop = scrollTop;
+
+      // Highlight the active section link
+      highlightNavLink();
     });
+
+    // Initial highlight on load
+    highlightNavLink();
   }
 
   // Execute functions

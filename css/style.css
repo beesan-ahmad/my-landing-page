@@ -234,6 +234,7 @@ header .container {
 
 #navbar a.active {
   color: var(--mainColor);
+  font-weight: bold; 
 }
 
 .toggle-btn {
