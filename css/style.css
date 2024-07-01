@@ -233,9 +233,10 @@ header .container {
 }
 
 #navbar a.active {
-  color: var(--mainColor);
-  font-weight: bold; 
+  color: var(--hoverColor);
+  font-weight: bold;
 }
+
 
 .toggle-btn {
   display: inline-block;
@@ -358,6 +359,11 @@ header .container {
   .big-wrapper.active .overlay {
     pointer-events: all;
     opacity: 1;
+  }
+
+  .active {
+    color: white;
+    background-color: navy;
   }
 
   .showcase-area {

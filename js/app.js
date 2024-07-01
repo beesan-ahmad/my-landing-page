@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   const navbar = document.getElementById('navbar');
-  const sections = document.querySelectorAll('section'); // Assume sections have id's matching navItem hrefs
+  const logo = document.querySelector('.logo');
 
   // Create navigation links
   navItems.forEach(item => {
@@ -24,44 +24,46 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Smooth scrolling for navigation links
-  const navLinks = document.querySelectorAll('#navbar a');
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
 
-  function scrollToSection(event) {
-    event.preventDefault();
+      const targetId = this.getAttribute('href');
+      const targetSection = document.querySelector(targetId);
 
-    const targetId = event.target.getAttribute('href').substring(1);
-    const targetSection = document.getElementById(targetId);
-
-    if (targetSection) {
-      targetSection.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }
-  }
-
-  navLinks.forEach(link => {
-    link.addEventListener('click', scrollToSection);
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
   });
 
-  // Function to highlight the active section link
-  function highlightNavLink() {
-    let currentSectionId = '';
+  // Function to determine which section is in the viewport and highlight the nav item
+  function highlightNavOnScroll() {
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('#navbar a');
 
-    sections.forEach(section => {
-      const rect = section.getBoundingClientRect();
-      if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
-        currentSectionId = section.id;
+    let currentSectionIndex = sections.length;
+
+    // Check each section to find out which one is in the viewport
+    sections.forEach((section, index) => {
+      const sectionTop = section.getBoundingClientRect().top;
+
+      if (sectionTop <= 150) { // 150 is the offset value to trigger the change
+        currentSectionIndex = index;
       }
     });
 
-    navLinks.forEach((link) => {
+    // Remove active class from all nav links and add to the one in view
+    navLinks.forEach((link, index) => {
       link.classList.remove('active');
-      if (link.getAttribute('href').substring(1) === currentSectionId) {
+      if (index === currentSectionIndex) {
         link.classList.add('active');
       }
     });
   }
+
+  // Event listener for scroll events
+  window.addEventListener('scroll', highlightNavOnScroll);
 
   // Toggle theme
   const toggleBtn = document.querySelector('.toggle-btn');
@@ -90,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
       events();
     });
 
-    main.appendChild(clone);
+    document.body.appendChild(clone);
   }
 
   // Initial function declarations
@@ -129,13 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         navbar.classList.remove('hide');
       }
       lastScrollTop = scrollTop;
-
-      // Highlight the active section link
-      highlightNavLink();
     });
-
-    // Initial highlight on load
-    highlightNavLink();
   }
 
   // Execute functions
