@@ -233,8 +233,9 @@ header .container {
 }
 
 #navbar a.active {
-  color: var(--hoverColor);
-  font-weight: bold;
+  color: var(--hoverColor); 
+  font-weight: bold; 
+  border-bottom: 2px solid var(--mainColor);
 }
 
 
