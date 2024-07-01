@@ -2,13 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const navItems = [
     { href: '#home', text: 'Home' },
     { href: '#about', text: 'About' },
-    { href: '#schedules', text: 'Schedules' },
+    { href: '#schedules', text: 'Schedule' },
     { href: '#contact', text: 'Contact' },
     { href: '#signup', text: 'Sign up', class: 'btn' },
   ];
 
   const navbar = document.getElementById('navbar');
-  const logo = document.querySelector('.logo');
 
   // Create navigation links
   navItems.forEach(item => {
@@ -46,14 +45,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelectorAll('#navbar a');
 
     sections.forEach(section => {
-      const sectionTop = section.offsetTop - 50;
-      const sectionHeight = section.clientHeight;
-      const scrollY = window.scrollY || window.pageYOffset;
+      const rect = section.getBoundingClientRect();
+      const isInViewport = (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+      );
 
-      if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+      if (isInViewport) {
+        // Add active class to the section and its corresponding nav item
+        section.classList.add('active');
         const targetId = '#' + section.id;
         const targetNavItem = document.querySelector(`#navbar a[href="${targetId}"]`);
-        setActiveNavItem(targetNavItem);
+        targetNavItem.classList.add('active');
+      } else {
+        // Remove active class from inactive sections and nav items
+        section.classList.remove('active');
+        const targetId = '#' + section.id;
+        const targetNavItem = document.querySelector(`#navbar a[href="${targetId}"]`);
+        targetNavItem.classList.remove('active');
       }
     });
   }
@@ -72,76 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
     targetNavItem.classList.add('active');
   }
 
-  // Toggle theme
-  const toggleBtn = document.querySelector('.toggle-btn');
-  const bigWrapper = document.querySelector('.big-wrapper');
-  let dark = false;
-
-  function toggleAnimation() {
-    dark = !dark;
-    let clone = bigWrapper.cloneNode(true);
-    if (dark) {
-      clone.classList.remove('light');
-      clone.classList.add('dark');
-    } else {
-      clone.classList.remove('dark');
-      clone.classList.add('light');
-    }
-    clone.classList.add('copy');
-    document.body.classList.add('stop-scrolling');
-
-    clone.addEventListener('animationend', () => {
-      document.body.classList.remove('stop-scrolling');
-      bigWrapper.remove();
-      clone.classList.remove('copy');
-      // Reset variables and rebind events
-      declare();
-      events();
-    });
-
-    document.body.appendChild(clone);
-  }
-
-  // Initial function declarations
-  let toggle_btn;
-  let hamburger_menu;
-
-  function declare() {
-    toggle_btn = document.querySelector('.toggle-btn');
-    bigWrapper = document.querySelector('.big-wrapper');
-    hamburger_menu = document.querySelector('.hamburger-menu');
-  }
-
-  // Event listeners
-  function events() {
-    toggle_btn.addEventListener('click', toggleAnimation);
-    hamburger_menu.addEventListener('click', function () {
-      this.classList.toggle('active');
-
-      if (this.classList.contains('active')) {
-        bigWrapper.classList.add('active');
-      } else {
-        bigWrapper.classList.remove('active');
-      }
-    });
-
-    // Hide navbar on scroll down, show on scroll up
-    let lastScrollTop = 0;
-    window.addEventListener('scroll', function () {
-      let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-      if (scrollTop > lastScrollTop) {
-        // Scroll down
-        navbar.classList.add('hide');
-      } else {
-        // Scroll up
-        navbar.classList.remove('hide');
-      }
-      lastScrollTop = scrollTop;
-    });
-  }
-
-  // Execute functions
-  declare();
-  events();
+  // Initial highlight based on initial scroll position
+  highlightNavOnScroll();
 });

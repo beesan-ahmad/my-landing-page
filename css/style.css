@@ -233,11 +233,29 @@ header .container {
 }
 
 #navbar a.active {
-  color: var(--hoverColor); 
-  font-weight: bold; 
+  color: var(--hoverColor);
+  font-weight: bold;
   border-bottom: 2px solid var(--mainColor);
 }
 
+#navbar li {
+  margin: 0 10px;
+}
+
+#navbar ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  justify-content: center;
+}
+
+#navbar a {
+  color: #fff;
+  padding: 15px;
+  text-decoration: none;
+  transition: 0.3s;
+}
 
 .toggle-btn {
   display: inline-block;
@@ -365,6 +383,10 @@ header .container {
   .active {
     color: white;
     background-color: navy;
+
+    .active {
+      font-weight: bold;
+    }
   }
 
   .showcase-area {
@@ -424,6 +446,10 @@ header .container {
 /* New styles for the tables */
 .section {
   padding: 60px 0;
+}
+
+section.active {
+  background-color: rgba(100, 188, 244, 0.1);
 }
 
 .schedule {
